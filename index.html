@@ -210,6 +210,20 @@
     .social-links a:hover { color: var(--text); text-decoration: none; }
     .social-links .sep { color: var(--border); font-size: 0.85rem; user-select: none; }
 
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+    footer p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
     /* ─── Responsive ──────────────────────────────────────────── */
     @media (max-width: 660px) {
       .nav-inner { padding: 0 20px; }
@@ -230,7 +244,7 @@
     <div class="nav-links">
       <a href="index.html" class="active">about</a>
       <a href="Amogh_CV.pdf" target="_blank">cv</a>
-      <a href="me.html">me</a>
+      <a href="news.html">news</a>
     </div>
     <button class="theme-toggle" id="toggleBtn" onclick="toggleTheme()" aria-label="Toggle theme">
       <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -378,6 +392,10 @@
   </div>
 
 </main>
+
+<footer>
+  <p>© Copyright 2026 Amogh Vinaykumar. Last updated: May 28, 2026.</p>
+</footer>
 
 <!-- ═══ THEME SCRIPT ══════════════════════════════════════════ -->
 <script>

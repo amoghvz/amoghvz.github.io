@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News – Amogh Vinaykumar</title>
+
+  <style>
+    @font-face {
+      font-family: 'Araboto';
+      src: url('Araboto_Light_400.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    }
+
+    :root {
+      --bg:           #ffffff;
+      --bg-nav:       rgba(255, 255, 255, 0.96);
+      --text:         #212121;
+      --text-muted:   #757575;
+      --link:         #7e57c2;
+      --link-hover:   #5e35b1;
+      --nav-active:   #212121;
+      --nav-inactive: #9e9e9e;
+      --border:       #e0e0e0;
+      --toggle-bg:    #f5f5f5;
+    }
+
+    [data-theme="dark"] {
+      --bg:           #1c1c1e;
+      --bg-nav:       rgba(28, 28, 30, 0.96);
+      --text:         #e1e1e6;
+      --text-muted:   #a0a0ab;
+      --link:         #b39ddb;
+      --link-hover:   #ce93d8;
+      --nav-active:   #e1e1e6;
+      --nav-inactive: #8e8e99;
+      --border:       #2c2c2e;
+      --toggle-bg:    #2c2c2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Araboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--link); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--link-hover); text-decoration: underline; }
+
+    /* ─── Navbar ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 40px; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.92rem; font-weight: 400; letter-spacing: 0.01em;
+      color: var(--nav-inactive); text-decoration: none;
+      transition: color 0.2s; padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover  { color: var(--nav-active); text-decoration: none; }
+    .nav-links a.active { color: var(--nav-active); border-bottom-color: var(--link); }
+
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      padding: 6px 8px; border-radius: 7px;
+      color: var(--nav-inactive); line-height: 1;
+      transition: background 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .theme-toggle:hover { background: var(--toggle-bg); color: var(--nav-active); }
+
+    /* ─── Main ─── */
+    main { max-width: 900px; margin: 0 auto; padding: 70px 40px 100px; }
+
+    .page-title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 1.9rem; font-weight: 300;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 48px;
+    }
+
+    /* ─── News Table ─── */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .news-entry {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+      padding: 20px 0;
+    }
+    .news-entry:first-child {
+      padding-top: 0;
+    }
+
+    .news-date {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      min-width: 110px;
+      flex-shrink: 0;
+      padding-top: 1px;
+      white-space: nowrap;
+    }
+
+    .news-text {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .news-text em {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+    footer p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 660px) {
+      .nav-inner { padding: 0 20px; }
+      main { padding: 44px 20px 70px; }
+      .news-entry { flex-direction: column; gap: 6px; }
+      .news-date { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="index.html">about</a>
+      <a href="Amogh_CV.pdf" target="_blank">cv</a>
+      <a href="news.html" class="active">news</a>
+    </div>
+    <button class="theme-toggle" id="toggleBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <h1 class="page-title">news</h1>
+
+  <div class="news-list">
+
+    <div class="news-entry">
+      <div class="news-date">May 2026</div>
+      <div class="news-text">
+        Collaborating with researchers at Caltech and Yale to build <a href="https://altisx.space/" target="_blank">Altis</a> Intelligence, an AI-powered geospatial damage assessment platform. <em>Coming soon...</em>
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Apr 2026</div>
+      <div class="news-text">
+        Raised over $10,000 in funding to build <a href="https://flysentinel.us/" target="_blank">Sentinel</a>, an autonomous drone system for real-time disaster response.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Mar 2026</div>
+      <div class="news-text">
+        Thrilled to join <a href="https://hemut.com/" target="_blank">Hemut (YC X25)</a> as a GTM and Automation Intern.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Jan 2026</div>
+      <div class="news-text">
+        Honored to be selected as an MIT THINK Finalist — top 5 out of 1,042 applicants — alongside $1,000 in research funding.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Dec 2025</div>
+      <div class="news-text">
+        Commenced work at the Princeton AI Lab and delivered a presentation on space biology research at <a href="https://asgsr.org/" target="_blank">ASGSR</a>.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Oct 2025</div>
+      <div class="news-text">
+        Presented research at the <a href="https://urtc.mit.edu/" target="_blank">MIT Undergraduate Research Technology Conference (URTC)</a> in Cambridge, MA.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Sep 2025</div>
+      <div class="news-text">
+        Joined <a href="https://deliberatorium.org/homepage/index.html" target="_blank">Prof. Mark Klein</a> at the MIT Center for Collective Intelligence, diving into negotiation algorithms and collective decision-making systems.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Jun 2025</div>
+      <div class="news-text">
+        Presented digital twin technology at SMU in collaboration with Lockheed Martin.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">Feb 2025</div>
+      <div class="news-text">
+        Began aerogel research under <a href="https://physics.northwestern.edu/people/faculty/core-faculty/william-halperin.html" target="_blank">Dr. Halperin</a> at Northwestern, investigating bacterial cellulose aerogels for spacecraft heat shield applications.
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© Copyright 2026 Amogh Vinaykumar. Last updated: May 28, 2026.</p>
+</footer>
+
+<script>
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('icon-moon').style.display = theme === 'dark' ? 'none'  : 'block';
+    document.getElementById('icon-sun').style.display  = theme === 'dark' ? 'block' : 'none';
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next    = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('av-theme', next);
+    applyTheme(next);
+  }
+  (function () {
+    const saved   = localStorage.getItem('av-theme');
+    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    applyTheme(saved || prefers);
+  })();
+</script>
+
+</body>
+</html>

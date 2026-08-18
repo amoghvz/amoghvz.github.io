@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News – Amogh Vinaykumar</title>
+  <meta name="description" content="Projects by Amogh Vinaykumar – satellite intelligence, autonomous systems, and applied machine learning." />
+  <title>Projects – Amogh Vinaykumar</title>
 
   <style>
     @font-face {
@@ -98,48 +99,63 @@
       margin-bottom: 48px;
     }
 
-    /* ─── News Table ─── */
-    .news-list {
+    /* ─── Projects ─── */
+    .project-list {
       display: flex;
       flex-direction: column;
       gap: 0;
     }
 
-    .news-entry {
-      display: flex;
-      gap: 48px;
-      align-items: flex-start;
-      padding: 20px 0;
+    .project-entry {
+      padding: 26px 0;
+      border-top: 1px solid var(--border);
     }
-    .news-entry:first-child {
+    .project-entry:first-child {
       padding-top: 0;
+      border-top: none;
     }
 
-    .news-date {
+    .project-name {
       font-family: 'Araboto', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 1.12rem;
+      font-weight: 500;
+      letter-spacing: -0.005em;
       color: var(--text);
-      min-width: 110px;
-      flex-shrink: 0;
-      padding-top: 1px;
-      white-space: nowrap;
+      margin-bottom: 10px;
     }
 
-    .news-text {
+    .project-desc {
       font-family: 'Araboto', sans-serif;
       font-size: 0.95rem;
       font-weight: 300;
       color: var(--text);
       line-height: 1.7;
+      max-width: 720px;
     }
 
-    .news-text em {
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      margin-top: 14px;
+    }
+    .project-links a {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
       color: var(--text-muted);
-      font-style: italic;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .project-links a:hover {
+      color: var(--text);
+      border-bottom-color: var(--text);
+      text-decoration: none;
     }
 
-    /* ─── Footer ─────────────────────────────────────────────── */
+    /* ─── Footer ─── */
     footer {
       border-top: 1px solid var(--border);
       padding: 24px 40px;
@@ -155,9 +171,9 @@
 
     @media (max-width: 660px) {
       .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 18px; }
       main { padding: 44px 20px 70px; }
-      .news-entry { flex-direction: column; gap: 6px; }
-      .news-date { min-width: unset; }
+      .project-links { gap: 16px; }
     }
   </style>
 </head>
@@ -167,9 +183,9 @@
   <div class="nav-inner">
     <div class="nav-links">
       <a href="index.html">about</a>
-      <a href="projects.html">projects</a>
+      <a href="projects.html" class="active">projects</a>
       <a href="amogh%20resume.pdf" target="_blank">cv</a>
-      <a href="news.html" class="active">news</a>
+      <a href="news.html">news</a>
     </div>
     <button class="theme-toggle" id="toggleBtn" onclick="toggleTheme()" aria-label="Toggle theme">
       <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -187,77 +203,76 @@
 </nav>
 
 <main>
-  <h1 class="page-title">news</h1>
+  <h1 class="page-title">projects</h1>
 
-  <div class="news-list">
+  <div class="project-list">
 
-    <div class="news-entry">
-      <div class="news-date"><strong>June 2026<strong></div>
-      <div class="news-text">
-        Excited to join Stanford's Open Virtual Assistant Lab as a research assistant under Cyrus Zhou, working on the future of AI reasoning!
-      </div>
-    </div>
-    
-    <div class="news-entry">
-      <div class="news-date"><strong>May 2026<strong></div>
-      <div class="news-text">
-        Collaborating with researchers at Caltech and Yale to build <a href="https://altisx.space/" target="_blank">Altis</a> Intelligence, a geospatial intelligence platform that harnesses synthetic aperture radar data for any application. <em>Coming soon...</em>
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date"><strong>Apr 2026<strong></div>
-      <div class="news-text">
-        Raised over $10,000 in funding to build <a href="https://flysentinel.us/" target="_blank">Sentinel</a>, an autonomous drone system for real-time disaster response.
+    <!-- Caelus -->
+    <div class="project-entry">
+      <h2 class="project-name">Caelus</h2>
+      <p class="project-desc">
+        An independent satellite-intelligence initiative that finds humanitarian and infrastructure
+        gaps missed by official monitoring, turning public Earth-observation data into actionable
+        briefs for communities, researchers, and organizations.
+      </p>
+      <div class="project-links">
+        <a href="https://www.caelusx.org/" target="_blank" rel="noopener">website</a>
+        <a href="https://delosx.vercel.app/" target="_blank" rel="noopener">delos</a>
       </div>
     </div>
 
-    <div class="news-entry">
-      <div class="news-date"><strong>Mar 2026<strong></div>
-      <div class="news-text">
-        Thrilled to join <a href="https://hemut.com/" target="_blank">Hemut (YC X25)</a> as a GTM and Automation Intern!
+    <!-- Altis -->
+    <div class="project-entry">
+      <h2 class="project-name">Altis</h2>
+      <p class="project-desc">
+        An all-weather satellite intelligence platform that transforms SAR imagery into
+        property-level disaster assessments, giving insurers and emergency responders a faster way
+        to understand damage when conventional imagery fails.
+      </p>
+      <div class="project-links">
+        <a href="https://altisx.space/" target="_blank" rel="noopener">website</a>
+        <a href="https://youtu.be/EcCSj3_DxaM" target="_blank" rel="noopener">demo video</a>
       </div>
     </div>
 
-    <div class="news-entry">
-      <div class="news-date"><strong>Jan 2026<strong></div>
-      <div class="news-text">
-        Honored to be selected as an MIT THINK Finalist — top 5 out of 1,042 applicants — alongside $1,000 in research funding.
+    <!-- Sentinel -->
+    <div class="project-entry">
+      <h2 class="project-name">Sentinel</h2>
+      <p class="project-desc">
+        A patent-pending, field-deployable autonomous drone system for disaster intelligence,
+        integrating onboard computer vision, geospatial analysis, and a custom payload deployment
+        mechanism to detect, localize, and respond to damage where conventional infrastructure is
+        unavailable or unreliable.
+      </p>
+      <div class="project-links">
+        <a href="https://flysentinel.us/" target="_blank" rel="noopener">website</a>
+        <a href="https://youtu.be/nzx5pjB69bY" target="_blank" rel="noopener">video</a>
       </div>
     </div>
 
-    <div class="news-entry">
-      <div class="news-date"><strong>Dec 2025<strong></div>
-      <div class="news-text">
-        Commenced work at the Princeton AI Lab and delivered a presentation on space biology research at <a href="https://asgsr.org/" target="_blank">ASGSR</a>.
+    <!-- Kairos -->
+    <div class="project-entry">
+      <h2 class="project-name">Kairos</h2>
+      <p class="project-desc">
+        An open geospatial intelligence project turning complex SAR and optical workflows into
+        composable research tools, pairing 21+ analyses with a custom AI system that autonomously
+        plans, executes, and synthesizes multi-step investigations across Earth-observation data.
+      </p>
+      <div class="project-links">
+        <a href="https://openkairos.vercel.app/" target="_blank" rel="noopener">kairos</a>
       </div>
     </div>
 
-    <div class="news-entry">
-      <div class="news-date"><strong>Oct 2025<strong></div>
-      <div class="news-text">
-        Presented research at the <a href="https://urtc.mit.edu/" target="_blank">MIT Undergraduate Research Technology Conference (URTC)</a> in Cambridge, MA.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date"><strong>Sep 2025<strong></div>
-      <div class="news-text">
-        Joined <a href="https://deliberatorium.org/homepage/index.html" target="_blank">Prof. Mark Klein</a> at the MIT Center for Collective Intelligence, diving into negotiation algorithms and collective decision-making systems.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date"><strong>Jun 2025<strong></div>
-      <div class="news-text">
-        Presented digital twin technology at <a href="https://www.ai4dme.com/" target="_blank">SMU</a> in collaboration with Lockheed Martin.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date"><strong>Feb 2025</strong></div>
-      <div class="news-text">
-        Began aerogel research under <a href="https://physics.northwestern.edu/people/faculty/core-faculty/william-halperin.html" target="_blank">Dr. Halperin</a> at Northwestern, investigating bacterial cellulose aerogels for spacecraft heat shield applications.
+    <!-- Behavior Buddy -->
+    <div class="project-entry">
+      <h2 class="project-name">Behavior Buddy</h2>
+      <p class="project-desc">
+        A machine-learning platform helping caregivers of children with autism track behaviors and
+        receive personalized, real-time intervention guidance between clinical sessions.
+      </p>
+      <div class="project-links">
+        <a href="https://www.ai4dme.com/" target="_blank" rel="noopener">lab website</a>
+        <a href="https://news.utsa.edu/2026/02/a-game-changer-ai-app-offers-support-to-caregivers-of-children-with-autism/" target="_blank" rel="noopener">news</a>
       </div>
     </div>
 

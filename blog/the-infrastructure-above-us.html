@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Is space exploration a necessity or an indulgence?" />
+  <title>The Infrastructure Above Us &ndash; Amogh Vinaykumar</title>
+
+  <style>
+    @font-face {
+      font-family: 'Araboto';
+      src: url('../Araboto_Light_400.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    }
+
+    :root {
+      --bg:           #ffffff;
+      --bg-nav:       rgba(255, 255, 255, 0.96);
+      --text:         #212121;
+      --text-muted:   #757575;
+      --text-faint:   #9e9e9e;
+      --link:         #7e57c2;
+      --link-hover:   #5e35b1;
+      --nav-active:   #212121;
+      --nav-inactive: #9e9e9e;
+      --border:       #e0e0e0;
+      --rule:         #ededed;
+      --toggle-bg:    #f5f5f5;
+    }
+
+    [data-theme="dark"] {
+      --bg:           #1c1c1e;
+      --bg-nav:       rgba(28, 28, 30, 0.96);
+      --text:         #e1e1e6;
+      --text-muted:   #a0a0ab;
+      --text-faint:   #85858f;
+      --link:         #b39ddb;
+      --link-hover:   #ce93d8;
+      --nav-active:   #e1e1e6;
+      --nav-inactive: #8e8e99;
+      --border:       #2c2c2e;
+      --rule:         #2a2a2c;
+      --toggle-bg:    #2c2c2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Araboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--link); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--link-hover); text-decoration: underline; }
+
+    /* ─── Navbar ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 40px; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.92rem; font-weight: 400; letter-spacing: 0.01em;
+      color: var(--nav-inactive); text-decoration: none;
+      transition: color 0.2s; padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover  { color: var(--nav-active); text-decoration: none; }
+    .nav-links a.active { color: var(--nav-active); border-bottom-color: var(--link); }
+
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      padding: 6px 8px; border-radius: 7px;
+      color: var(--nav-inactive); line-height: 1;
+      transition: background 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .theme-toggle:hover { background: var(--toggle-bg); color: var(--nav-active); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+    footer p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* ─── Main ─── */
+    main { max-width: 900px; margin: 0 auto; padding: 54px 40px 100px; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.86rem; font-weight: 300;
+      color: var(--text-faint); text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .back-link svg { flex-shrink: 0; }
+
+    /* ─── Article header ─── */
+    .article-header {
+      max-width: 700px;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 42px;
+    }
+
+    .article-title {
+      font-family: 'Araboto', sans-serif;
+      font-size: 2.35rem; font-weight: 400;
+      letter-spacing: -0.028em; line-height: 1.14;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .article-dek {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.05rem; font-weight: 300; font-style: italic;
+      line-height: 1.6; color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .article-meta {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 5px 10px;
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--text-faint);
+    }
+    .article-meta .dot { color: var(--border); user-select: none; }
+    .article-meta .tag { color: var(--text-faint); }
+    .article-meta .tag::before { content: '#'; opacity: 0.55; margin-right: 1px; }
+
+    /* ─── Article body ─── */
+    .article-body { max-width: 700px; }
+
+    .article-body p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.02rem; font-weight: 300;
+      line-height: 1.85; color: var(--text);
+      margin-bottom: 1.5em;
+    }
+    .article-body p:last-child { margin-bottom: 0; }
+    .article-body em { font-style: italic; }
+
+    .article-body h2 {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.22rem; font-weight: 500;
+      letter-spacing: -0.008em; color: var(--text);
+      margin: 2.9em 0 0.95em;
+    }
+    .article-body h2:first-child { margin-top: 0; }
+
+    /* ─── Article footer nav ─── */
+    .article-end {
+      max-width: 700px;
+      margin-top: 60px; padding-top: 26px;
+      border-top: 1px solid var(--rule);
+    }
+    .article-end a {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--text-muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .article-end a:hover { color: var(--text); text-decoration: none; }
+
+    @media (max-width: 660px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 17px; }
+      main { padding: 34px 20px 70px; }
+      .back-link { margin-bottom: 28px; }
+      .article-title { font-size: 1.85rem; }
+      .article-dek { font-size: 1rem; }
+      .article-body p { font-size: 1rem; line-height: 1.8; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="../index.html">about</a>
+      <a href="../projects.html">projects</a>
+      <a href="../blog.html" class="active">blog</a>
+      <a href="../amogh%20resume.pdf" target="_blank">cv</a>
+      <a href="../news.html">news</a>
+    </div>
+    <button class="theme-toggle" id="toggleBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+  <a class="back-link" href="../blog.html"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> blog</a>
+
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">The Infrastructure Above Us</h1>
+      <p class="article-dek">Is space exploration a necessity or an indulgence?</p>
+      <div class="article-meta">
+        <span>May 2026</span>
+        <span class="dot">&middot;</span>
+        <span>9 min read</span>
+        <span class="dot">&middot;</span>
+        <span class="tag">space</span>
+        <span class="tag">earth observation</span>
+        <span class="tag">policy</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <p>On the morning of February 15, 2013, the residents of Chelyabinsk, Russia looked up at a streak of light tearing across the winter sky. Nineteen seconds later, a 60-foot asteroid detonated 14 miles above the city with the power equivalent of 440,000 tons of TNT, almost thirty times the force of the bomb dropped on Hiroshima (NASA, 2018). Over 1600 people were injured as buildings across six cities were damaged. And, surprisingly, not a single early warning system had detected it; the object had arrived, quite literally, out of nowhere.</p>
+
+      <p>Space exploration has always been framed as a question of aspiration, rockets and astronauts exploring the unknown. But Chelyabinsk changed that. It was an object, traveling over 64,000 kilometers per hour and weighing around 12,000 tons, that nobody saw coming. The question about whether space exploration is a necessity or an indulgence sounds, at first, much like a debate about priorities&mdash;about whether it&rsquo;s worth funding wonder and imagination when in reality the world has more pressing problems. But that framing assumes that all of space exploration is the same thing, that a billionaire&rsquo;s orbital joyride and a satellite mapping where a natural disaster might occur, are all events in the same category. However they are not. Chelyabinsk was not a failure of ambition. It was a failure of infrastructure, and the difference between these two terms is what this debate has always gotten wrong.</p>
+
+      <h2>Necessity vs Indulgence</h2>
+
+      <p>But what is &ldquo;necessity&rdquo; and what is &ldquo;indulgence&rdquo;? A necessity is something whose absence imposes a severe cost that cannot be recovered, even with certain alternatives. An indulgence, on the other hand, is something whose benefit is real but substitutable, valuable in the way that luxuries are valuable. Applied to space exploration, however, these definitions immediately expose a problem: the phrase describes not one venture but many, and those ventures do not all belong in the same moral category. The real question therefore becomes not whether space exploration as a whole deserves one label or the other, but what criterion separates the two within it.</p>
+
+      <p>Carl Sagan once wrote that &ldquo;every aspect of nature reveals a deep mystery and touches our sense of wonder and awe&rdquo; (Sagan, 1994), and he was not wrong. Wonder is real, yet it is not the criterion for necessity. It does provide meaningful benefits yet it is substitutable, which is to say, the definition of indulgence. The programmes that cross the boundary into necessity do so not because they inspire future discovery, but because they hold consequences that the world cannot afford to lose, whether or not anyone is paying attention to them.</p>
+
+      <h2>Earth Observation: Society&rsquo;s Infrastructure</h2>
+
+      <p>These returns are not generated by luck or ambition, but rather something far more unglamorous, and far more powerful: data. Synthetic aperture radar, or SAR, allows satellites to view the Earth&rsquo;s surface through cloud cover, through darkness, and through the kind of conditions that render conventional optical sensors completely useless. During a flood, when the sky is cloudy and roads are impassable, SAR tells emergency managers where to go and when. And when an oil tanker leaks in the open ocean or illegal miners trek through the rainforest, satellites become the first defense. No ground-based system can replace that.</p>
+
+      <p>Now in May 2026, Indian startup GalaxEye launched Mission Drishti aboard a SpaceX Falcon 9, the world&rsquo;s first satellite to simultaneously capture both optical and radar imagery of the same location at the same instant (GalaxEye 2026). During a cyclone, a single pass of Drishti can simultaneously identify inundated areas, severed infrastructure, and unaffected zones, delivering, in seconds, the situational picture that would otherwise take ground teams days to assemble (Business Standard, 2026). Earth observation is not a scientific luxury anymore; it acts as society&rsquo;s operational infrastructure, saving lives during disasters and providing answers precisely when every other system has gone dark. The question changes from whether humanity can afford to maintain it to whether humanity can survive losing it.</p>
+
+      <h2>Venus is Not a Coincidence</h2>
+
+      <p>Less obvious, but no less consequential, is the case made by planetary science, a field that almost seems the definition of indulgence. Venus, Earth&rsquo;s nearest planetary neighbor, is almost identical in size and initial composition to Earth, which may seem surprising due to Mars&rsquo; more well known similarities, however today it registers a surface temperature of 465&deg;C and an atmospheric pressure ninety times that of Earth&rsquo;s (ESA, 2021). The main cause of this: a runaway greenhouse effect, the process in which atmospheric warming triggers the evaporation of water, which is also a greenhouse gas, causing further warming in a positive feedback loop (RealClimate, 2006).</p>
+
+      <p>Venus represents, mainly physically, a controlled environment that Earth&rsquo;s climate scientists cannot mimic on Earth, testing the question: what happens when climate change and hence the greenhouse effect goes unchecked? Well, we can be sure that the implications for climate policy are real. Climate models validated against Venus&rsquo;s atmospheric data have been proven to be more robust than those based solely on the Earth&rsquo;s constrained historical record. As the NASA chief scientist Ellen Stofan observed: &ldquo;I think Venus is an important warning: greenhouse atmospheres are not theoretical&rdquo; (Stofan 2018). In this sense, planetary science is not a pursuit of astronomical curiosity, but can even act as the main model that influences our everyday environmental decision-making. The answers to Earth&rsquo;s future climate do not exist on Earth itself, but rather 38 million miles away &mdash; and understanding it may be exactly what humanity needs to help protect tomorrow.</p>
+
+      <h2>How Space Creates What Markets Cannot</h2>
+
+      <p>Beyond providing benefit to day-to-day needs, space exploration performs a less celebrated function: fuel the innovation economy. The extreme engineering constraints of spaceflight, minimising weight to the single gram, performing calculations that decide between life and death, and surviving temperature swings of several hundred degrees, create engineering problems that no terrestrial market demand can generate. And this doesn&rsquo;t just influence the development of flawless systems in space, but also establishes the foundation for future commercial discovery. Where do you think velcro came from or where the memory foam in your mattress originated? While almost seeming contradictory, radical constraint is in itself a form of subsidy, forcing solutions that the market, left alone, would indubitably defer.</p>
+
+      <p>Aerogel insulation illustrates this mechanism almost better than anything else. Known since the 1930s, it was the most effective insulating material ever identified, with one key fault: the network was inherently brittle. Too brittle and also too expensive to produce at any meaningful scale almost shunned this extraordinary material (holds the world record for lowest density) from any commercial future, however one invention changed that. In the 1990s, NASA had run into a huge cryogenic insulation problem which required something that could keep rocket propellant stable under conditions that defeated every conventional alternative. The agency funded the solution through Small Business Innovation Research contracts, and what emerged was the first flexible, durable aerogel blanket, conducting heat at less than half the rate of conventional foam insulation (NASA Spinoff, 2020). Aspen Aerogels, the company that commercialised it, now produces almost 40 million square feet of insulation annually, generating over $100 million in yearly revenue (NASA Spinoff, 2020).</p>
+
+      <p>Now aerogels line the walls of Arctic pipelines, insulate liquefied natural gas terminals/spacecraft reentry vehicles, and are even being applied in biomedical solutions such as targeted drug release. The material keeping critical energy infrastructure operational across four continents would have been all but overlooked without the unique use case space exploration showed. Where the unknown is common is where solutions to necessity arise, for an environment that cannot afford failure has no choice but to invent its way out.</p>
+
+      <h2>Planetary Defense: Where The Dinosaurs Went Wrong</h2>
+
+      <p>Sixty-six million years ago, an asteroid approximately six miles wide ended the reign of the dinosaurs, erased almost three quarters of all species on Earth, and literally reset the trajectory of life on this planet. But how did this happen? Well, in the most literal sense possible, the dinosaurs were missing one thing: a space programme. Planetary defense is a critical part of why we need space technology. In 2022, NASA&rsquo;s DART spacecraft deliberately collided with the asteroid Dimorphos at 6.6 kilometres per second and measurably altered its orbital period, the first proof that humanity has the potential to deflect an approaching asteroid (NASA, 2022). Now as NASA estimates that approximately 25,000 near-Earth asteroids 500 feet wide or larger exist, with that being found using only our limited technology, it makes sense why people can be worried (NASA DART Fact Sheet, 2018).</p>
+
+      <p>However, objections may arise that such events are statistically rare, and this is technically true, but in reality it misunderstands how risk actually works. Nobody cancels their life insurance because they haven&rsquo;t had a health problem in the last few months. The justification for insurance was never the likelihood of the event, it was always the &ldquo;what if&rdquo; after something did happen. An asteroid capable of destroying a city, or even worse, destroying a civilization, makes it clearly rational to be prepared. And unlike something like a house fire, there is no rebuilding after a civilisation-ending impact, making the necessity of space-based planetary defense not a preference, but a basis backed by clear logic.</p>
+
+      <p>It is easy to be consumed by the daily rhythms of life and dismiss space as out of reach, but people cannot forget that Earth is not a sealed environment, it is after all only a small rock moving through a solar system that has never been, to put it in simple terms, safe. In many ways space exploration doesn&rsquo;t become a necessity to find solutions outside this planet, but rather due to its crucial nature to protect what exists on it.</p>
+
+      <h2>Moral Priority</h2>
+
+      <p>But at the end of the day the most serious objection to our time spent in space is rather moral in nature. Global poverty exists and preventable diseases kill millions annually. So is it really in our best interests to be putting the billions we do into space exploration? This argument does deserve to be taken seriously, as it does address whether humanity&rsquo;s most urgent obligations lie outward or immediately in front of it.</p>
+
+      <p>But when we look at the actual budget proportions, the situation becomes more realistic. NASA&rsquo;s annual budget represents only approximately 0.3% of US federal spending, and yet in 2025, the Trump administration proposed slashing it by nearly 25%, cutting science programs by 47%, and eliminating Earth science funding by 53% (Space.com, 2025). Even in Europe, the Copernicus programme costs roughly &euro;800 million per year across all EU member states, barely a fraction of a percent of European GDP (European Commission, 2017). While it is important to focus on humanity&rsquo;s immediate obligations, is it really worth dismantling the very infrastructure that supports our Earth&rsquo;s detection, prevention, and protection, all to redirect a tiny source of funding to ineffectively address Earth&rsquo;s current issues? Withdrawing space investment in the name of humanitarian priority would, in many cases, directly harm the populations its advocates seek to protect, an indulgence in itself.</p>
+
+      <h2>Conclusion</h2>
+
+      <p>Space exploration is neither universally necessary nor universally indulgent. But that is precisely the point. Ambition and pragmatism can be two sides of the same coin, and space exploration is, essentially, where they meet. The systems that map floods or track asteroids are not distractions from Earth&rsquo;s problems, they are, in many cases, the most serious attempts to solve them. While orbital tourism and exercises in national symbolism are indulgences the world can comfortably live without, the infrastructure space technology has built and space exploration has expanded is something we cannot lose. The dinosaurs never had a choice in deciding their fate and Chelyabinsk was a warning towards the dangers of ignorance. Humanity, unlike the dinosaurs, has both the knowledge and the capability to act, the only remaining question is whether it will treat that as the privilege it is, or the indulgence it cannot afford to be.</p>
+    </div>
+  </article>
+
+  <div class="article-end">
+    <a href="../blog.html"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> back to all writing</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; Copyright 2026 Amogh Vinaykumar. Last updated: May 28, 2026.</p>
+</footer>
+
+<script>
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('icon-moon').style.display = theme === 'dark' ? 'none'  : 'block';
+    document.getElementById('icon-sun').style.display  = theme === 'dark' ? 'block' : 'none';
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next    = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('av-theme', next);
+    applyTheme(next);
+  }
+  (function () {
+    const saved   = localStorage.getItem('av-theme');
+    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    applyTheme(saved || prefers);
+  })();
+</script>
+
+</body>
+</html>

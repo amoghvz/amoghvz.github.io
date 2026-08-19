@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="What happens to liberty when the state writes the code?" />
+  <title>The Pretense of Code &ndash; Amogh Vinaykumar</title>
+
+  <style>
+    @font-face {
+      font-family: 'Araboto';
+      src: url('../Araboto_Light_400.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    }
+
+    :root {
+      --bg:           #ffffff;
+      --bg-nav:       rgba(255, 255, 255, 0.96);
+      --text:         #212121;
+      --text-muted:   #757575;
+      --text-faint:   #9e9e9e;
+      --link:         #7e57c2;
+      --link-hover:   #5e35b1;
+      --nav-active:   #212121;
+      --nav-inactive: #9e9e9e;
+      --border:       #e0e0e0;
+      --rule:         #ededed;
+      --toggle-bg:    #f5f5f5;
+    }
+
+    [data-theme="dark"] {
+      --bg:           #1c1c1e;
+      --bg-nav:       rgba(28, 28, 30, 0.96);
+      --text:         #e1e1e6;
+      --text-muted:   #a0a0ab;
+      --text-faint:   #85858f;
+      --link:         #b39ddb;
+      --link-hover:   #ce93d8;
+      --nav-active:   #e1e1e6;
+      --nav-inactive: #8e8e99;
+      --border:       #2c2c2e;
+      --rule:         #2a2a2c;
+      --toggle-bg:    #2c2c2e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: 'Araboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: var(--link); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--link-hover); text-decoration: underline; }
+
+    /* ─── Navbar ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 40px; height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.92rem; font-weight: 400; letter-spacing: 0.01em;
+      color: var(--nav-inactive); text-decoration: none;
+      transition: color 0.2s; padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover  { color: var(--nav-active); text-decoration: none; }
+    .nav-links a.active { color: var(--nav-active); border-bottom-color: var(--link); }
+
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      padding: 6px 8px; border-radius: 7px;
+      color: var(--nav-inactive); line-height: 1;
+      transition: background 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .theme-toggle:hover { background: var(--toggle-bg); color: var(--nav-active); }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      max-width: 900px;
+      margin: 60px auto 0;
+    }
+    footer p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* ─── Main ─── */
+    main { max-width: 900px; margin: 0 auto; padding: 54px 40px 100px; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.86rem; font-weight: 300;
+      color: var(--text-faint); text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--text); text-decoration: none; }
+    .back-link svg { flex-shrink: 0; }
+
+    /* ─── Article header ─── */
+    .article-header {
+      max-width: 700px;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 42px;
+    }
+
+    .article-title {
+      font-family: 'Araboto', sans-serif;
+      font-size: 2.35rem; font-weight: 400;
+      letter-spacing: -0.028em; line-height: 1.14;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .article-dek {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.05rem; font-weight: 300; font-style: italic;
+      line-height: 1.6; color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .article-meta {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 5px 10px;
+      font-family: 'Araboto', sans-serif;
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--text-faint);
+    }
+    .article-meta .dot { color: var(--border); user-select: none; }
+    .article-meta .tag { color: var(--text-faint); }
+    .article-meta .tag::before { content: '#'; opacity: 0.55; margin-right: 1px; }
+
+    /* ─── Article body ─── */
+    .article-body { max-width: 700px; }
+
+    .article-body p {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.02rem; font-weight: 300;
+      line-height: 1.85; color: var(--text);
+      margin-bottom: 1.5em;
+    }
+    .article-body p:last-child { margin-bottom: 0; }
+    .article-body em { font-style: italic; }
+
+    .article-body h2 {
+      font-family: 'Araboto', sans-serif;
+      font-size: 1.22rem; font-weight: 500;
+      letter-spacing: -0.008em; color: var(--text);
+      margin: 2.9em 0 0.95em;
+    }
+    .article-body h2:first-child { margin-top: 0; }
+
+    /* ─── Article footer nav ─── */
+    .article-end {
+      max-width: 700px;
+      margin-top: 60px; padding-top: 26px;
+      border-top: 1px solid var(--rule);
+    }
+    .article-end a {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--text-muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .article-end a:hover { color: var(--text); text-decoration: none; }
+
+    @media (max-width: 660px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 17px; }
+      main { padding: 34px 20px 70px; }
+      .back-link { margin-bottom: 28px; }
+      .article-title { font-size: 1.85rem; }
+      .article-dek { font-size: 1rem; }
+      .article-body p { font-size: 1rem; line-height: 1.8; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="../index.html">about</a>
+      <a href="../projects.html">projects</a>
+      <a href="../blog.html" class="active">blog</a>
+      <a href="../amogh%20resume.pdf" target="_blank">cv</a>
+      <a href="../news.html">news</a>
+    </div>
+    <button class="theme-toggle" id="toggleBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+  <a class="back-link" href="../blog.html"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> blog</a>
+
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">The Pretense of Code</h1>
+      <p class="article-dek">What happens to liberty when the state writes the code?</p>
+      <div class="article-meta">
+        <span>June 2026</span>
+        <span class="dot">&middot;</span>
+        <span>11 min read</span>
+        <span class="dot">&middot;</span>
+        <span class="tag">ai governance</span>
+        <span class="tag">political economy</span>
+        <span class="tag">liberty</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <p>In March 2024, the European Parliament passed the world&rsquo;s first comprehensive law for artificial intelligence. At the center of this legislation sat a single number: ten to the power of twenty-five. Any AI system trained using more than ten septillion floating-point operations would be classified as a general-purpose model posing systemic risk, and, hence, require direct oversight from a newly established AI Office in Brussels.</p>
+
+      <p>It seemed almost perfect. The threshold had emerged from months of consultation with engineers, economists, and legal scholars across the continent. It was not, however, correct. Within a year of the regulation passing, researchers had shown that advances in training efficiency allowed equally capable models to be produced at a fraction of the budget the threshold assumed. The law stayed the same even as AI kept advancing.</p>
+
+      <p>The obvious question that comes to mind is: how did this happen? The European Union was not just acting carelessly. It spent years developing the law, consulted experts, and relied on what seemed at the time to be a reasonable way of measuring AI capability. Yet by the time the regulation took effect, the benchmark it centered on was already losing relevance. The easy answer is that regulators simply needed better data, more time, or even more accurate forecasting. But the deeper problem was that the knowledge needed to design a lasting rule was not available to anyone when the rule was written. No regulator could possibly know in advance how quickly training methods would improve or which breakthroughs would make the current standard useless. As Friedrich Hayek argued decades ago, the knowledge needed to make these decisions is constantly changing, emerging through the actions and discoveries of millions of individuals (Hayek, 1945).</p>
+
+      <h2>A Problem Older Than AI</h2>
+
+      <p>In 1945, Hayek published a fifteen-page essay in the <em>American Economic Review</em> that reframed what economics was actually about. His central insight was simple: the information needed to organize society does not exist in any one place. You can see this in everyday life. A producer often notices trouble with a supplier long before it appears in a report. Traders pick up shifts in demand through experience rather than trends in official data. And most of all, families understand their own priorities and trade-offs in ways that no planner can really infer, even with access to all the available data.</p>
+
+      <p>The fact that this knowledge is difficult to quantify does not make it any less valuable. Prices work precisely because they condense local decisions into signals that people can act on without needing to know the full story. For example, a rising price may prompt a manufacturer to find alternatives instead of tracing the drought, labor shortage, or supply disruption on the other side of the world that caused it.</p>
+
+      <p>Hayek called the attempt to replace this process with centralized design the &ldquo;pretense of knowledge&rdquo;: not technically a lack of expertise, but the belief that enough expertise can substitute for information that is inherently dispersed throughout society (Hayek, 1974). While he was writing about planning boards and production quotas, the principle extends far beyond just steel and grain.</p>
+
+      <p>This is exactly the challenge AI governance faces today, and the floating-point threshold is only one example of why it is so difficult to overcome.</p>
+
+      <h2>Same Problem, New Technology</h2>
+
+      <p>A large language model is often described as a prediction engine, but in practice it is something more unique. Trained on vast amounts of human writing, it captures patterns of reasoning and problem-solving without storing knowledge in any straightforward form (Vaswani et al., 2017). The same model that helps a doctor summarize clinical research can help a student learn calculus, assist a journalist with reporting, or, in the wrong hands, be used for manipulation. The technology remains the same, while the consequences depend on how people choose to use it.</p>
+
+      <p>This creates a major challenge for regulators. To know whether a model poses a serious risk, they would have to understand how it will be used across countless situations, by people with different goals, and sometimes even in applications that do not exist yet. Risk therefore stops being just a feature of the model and instead emerges from the interaction between the model and the people using it.</p>
+
+      <p>There is a more precise critique that goes beyond Hayek. Since Menger, the tradition has argued that value is not an objective property of things (Menger, 1871). It depends on the person and the circumstances. Risk works much the same way. A system that causes harm in one context may be harmless in another. When regulators assign a risk classification to a model before it is deployed, they treat risk as though it were a fixed property of the technology rather than something shaped by how it is actually used.</p>
+
+      <p>Yet the EU AI Office, despite significant expertise and resources, has not found a reliable way to evaluate systemic risk independently of real-world deployment. The National Institute of Standards and Technology reached a similar conclusion in its AI Risk Management Framework, emphasizing voluntary assessment rather than relying on a single test to decide whether a model could determine risk in advance (NIST, 2023). As a result, both institutions have relied on proxies such as parameter counts, benchmark scores, and training compute. While these metrics are easy to measure, they are not the information regulators actually need.</p>
+
+      <p>Overall, Hayek&rsquo;s point was never that the knowledge problem could be solved with enough data. In markets, such as AI, the most important information emerges through use. It can only appear when people experiment, adapt, discover opportunities, and respond to changing conditions.</p>
+
+      <p>Israel Kirzner extended this insight through his work on entrepreneurial discovery. Markets matter not because they can allocate resources, but because they generate new knowledge. Entrepreneurs notice opportunities that others miss, test new ideas, learn from failures, and uncover possibilities that no planner could have predicted in advance (Kirzner, 1973).</p>
+
+      <p>The history of AI development follows this pattern closely. The transformer architecture that underlies today&rsquo;s leading language models began as a research paper published by eight researchers in 2017. Within months, researchers around the world were building on it, producing a cascade of innovations that no regulator could have ever anticipated (Vaswani et al., 2017).</p>
+
+      <h2>When Rules Become Code</h2>
+
+      <p>Traditionally, the law steps in after the fact. It defines what is prohibited, observes what people actually do, and imposes consequences when those boundaries are crossed. Between the law and a person&rsquo;s decision, however, there is room to choose. Jes&uacute;s Huerta de Soto describes this as preserving dynamic efficiency: the conditions that allow entrepreneurs and innovators to discover new knowledge because they are free to try things that no one has yet evaluated (Huerta de Soto, 2009).</p>
+
+      <p>However, AI governance is moving in the opposite direction. The EU AI Act requires pre-deployment safety evaluations before high-risk systems may reach users, and capability thresholds determine which architectures can be legally developed and deployed. The state no longer waits to observe what a system does, but instead decides in advance what a system is allowed to become.</p>
+
+      <p>This is a fundamentally different kind of authority. As Huerta de Soto explains in his discussion of the socialist calculation problem, centralized systems cannot access &ldquo;the entrepreneurial knowledge created through decentralized discovery&rdquo; because that knowledge does not exist until the discovery process actually unfolds (Huerta de Soto, 2010). When regulators must approve a model before it reaches users, they replace that process with their own limited foresight. In effect, the regulator takes on the role of the entrepreneur.</p>
+
+      <p>The deepest consequence of embedding governance into code can be put into four words: it changes the default. Traditional law tells people what they cannot do, while digital governance tells systems what they are allowed to become. The freedom that remains is whatever fits within those certain boundaries.</p>
+
+      <h2>The Spiral in Motion</h2>
+
+      <p>Ludwig von Mises observed that interventions do not resolve the distortions they are introduced to correct (Mises, 1940). Each regulation, in the end, just alters incentives, creates new distortions, and those distortions become the justification for another round of intervention.</p>
+
+      <p>The EU AI Act has already begun to demonstrate this pattern. Its compliance requirements, from technical documentation to EU database registration, have disproportionately burdened independent researchers and open-source projects, despite their historical role in driving many of the field&rsquo;s most consequential advances. In contrast, incumbent firms with established legal departments and regulatory teams were able to absorb these costs through existing resources. As a result, the regulatory framework has concentrated AI development in the organizations least subject to competitive pressure, narrowing the range of approaches and slowing the places in which the field has actually advanced (Stanford HAI, 2024).</p>
+
+      <p>The same pattern is visible in content moderation. When the EU&rsquo;s Digital Services Act imposed penalties of up to six percent of global annual revenue for failing to remove illegal content, it created a straightforward incentive: over-removal was safer than under-removal. Platforms optimized their moderation systems for regulatory compliance rather than perfect accuracy, which led to legal speech being removed quickly and often without anyone clearly intending it or noticing it publicly (European Parliament, 2022). Practically, the system designed to protect users also made it easier to suppress legitimate expression because that was the lower-risk response.</p>
+
+      <p>This is the deeper risk of embedding regulation into infrastructure. Traditional regulatory distortions are usually visible. Prices rise. Businesses close. Shortages appear. But when regulation operates through code, its consequences can look like ordinary features of the system rather than the result of important policy choices.</p>
+
+      <h2>Money, Identity, and the Architecture of Permission</h2>
+
+      <p>The same logic applies, with maybe even more immediate force, to programmable money and digital identity systems.</p>
+
+      <p>Central bank digital currencies, in advanced development across dozens of countries, represent something genuinely new in monetary history. Money, as the Austrian tradition understands it, is not merely a medium of exchange. It is the &ldquo;prerequisite of economic calculation and the foundation of voluntary coordination across time&rdquo; (Mises, 1949). Because of that, control over money has always meant, in part, control over the choices people are free to make.</p>
+
+      <p>Now, as today&rsquo;s economy has become more digital, programmable currency has become more common&mdash;essentially money with conditions built into it. Spending can be restricted by category, geography, expiration date, or compliance status. It has come to the point where the state doesn&rsquo;t even have to prohibit a transaction outright. It can literally make the transaction technically impossible. What appears as a feature of the payment system is, in substance, a form of control because it does not merely deter certain behavior, but it forecloses it.</p>
+
+      <p>Digital identity systems follow the same logic. When identity verification becomes the gateway through which nearly all economic and social participation passes, the burden of proof inverts. In a free society, the state must justify restrictions on who may participate. In a digitally mediated society, the individual must actually prove eligibility before any participation is permitted. Hence, a citizen becomes a user, a user becomes a verified profile, and anyone who cannot be verified is excluded by the design of the system itself.</p>
+
+      <p>More broadly, Bagus and Howden argue that monetary interventions compound over time, where each distortion generates conditions that justify the next (Bagus, 2012). Digital monetary systems accelerate this dynamic by making each step of the spiral less visible than the last.</p>
+
+      <p>But the Misesian spiral analysis misses one key aspect. Traditional interventions can usually be undone. A tariff can be lifted. When the political will exists, these policies can be rolled back. Digital systems, on the other hand, are different. Once physical cash disappears and a CBDC becomes the primary form of money, reversing course is no longer easy. The same is true of digital identity. If biometric verification becomes the gateway to banking, welfare, or even a phone contract, removing it means replacing infrastructure that millions of people have come to rely on. In other words, digital intervention becomes harder to reverse.</p>
+
+      <h2>The Safety Objection</h2>
+
+      <p>The most serious objection to this analysis is that AI systems and digital payment infrastructure can cause genuine harm. In reality, fraud will always exist, manipulation will always be real, and as AI systems become more capable, the potential for misuse only grows.</p>
+
+      <p>But the Austrian critique of digital interventionism is not that these risks are imaginary. It is that the institutional framework now being built to address them is incapable of doing so effectively, while also suppressing the very processes through which better solutions would otherwise emerge.</p>
+
+      <p>Huerta de Soto&rsquo;s concept of dynamic efficiency suggests that the real question is not whether regulation creates the appearance of safety today, but whether it preserves the entrepreneurial discovery process through which better, safer, and more capable systems emerge over time (Huerta de Soto, 2009).</p>
+
+      <p>A governance regime that concentrates AI development in a small number of heavily regulated incumbents, discourages open-source research, and substitutes approval processes for competitive market feedback does not make technology safer. Rather, it makes it less diverse, less adaptable, and less capable of correcting its own mistakes through competition.</p>
+
+      <h2>Conclusion</h2>
+
+      <p>In the 1920s, Mises argued that socialist calculation must fail. In 1945, Hayek explained why: the knowledge needed to coordinate a complex society cannot simply be gathered by a central authority because it emerges through the very process central planning tries to replace. And essentially, the twentieth century ran this experiment at enormous scale.</p>
+
+      <p>Today, digital governance has not solved the knowledge problem, but has just given it new infrastructure. The &ldquo;planning bureau&rdquo; has become a regulatory office, the &ldquo;five-year plan&rdquo; has become a risk-classification framework, and &ldquo;command over steel&rdquo; has become pre-deployment capability approval. The underlying assumption, however, has not changed: that experts can replace the decisions of millions of individuals without losing the knowledge those decisions create.</p>
+
+      <p>That assumption breaks down for the same reason it always has. The knowledge needed to govern these systems well does not and cannot exist before deployment because it emerges through the interactions between technology and the people who use it. Those interactions can only be discovered through the kind of open-ended, competitive process that pre-approval regimes inevitably restrict.</p>
+
+      <p>When the state writes the code, it does not become wiser than the market. Instead, it decides which choices are possible. What is lost is not only efficiency, but also the process through which people discover what is possible, what is dangerous, and what is worth building in the first place.</p>
+
+      <p>Nobody files a complaint about the idea they never had. The cost falls on people who have no way to know they paid it, yet the system records no failure because it cannot see what never happened.</p>
+    </div>
+  </article>
+
+  <div class="article-end">
+    <a href="../blog.html"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> back to all writing</a>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; Copyright 2026 Amogh Vinaykumar. Last updated: May 28, 2026.</p>
+</footer>
+
+<script>
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('icon-moon').style.display = theme === 'dark' ? 'none'  : 'block';
+    document.getElementById('icon-sun').style.display  = theme === 'dark' ? 'block' : 'none';
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next    = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('av-theme', next);
+    applyTheme(next);
+  }
+  (function () {
+    const saved   = localStorage.getItem('av-theme');
+    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    applyTheme(saved || prefers);
+  })();
+</script>
+
+</body>
+</html>
